@@ -62,7 +62,14 @@
 {
     
     // Return the number of rows in the section.
-    return [[self.rowArray objectAtIndex:section] count];
+    if (section == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return [[self.rowArray objectAtIndex:section] count];
+    }
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -109,16 +116,24 @@
         int base=0;
         int increament = 63;
         
+        NSDictionary *todayWeather;
+        
+        todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:0];
+        
+//        NSDictionary *todayWeather = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%u - %u", ([[weekday objectForKey:@"low"] integerValue]-32)*5/9, ([[weekday objectForKey:@"high"] integerValue]-32)*5/9],[NSString stringWithFormat:@"%@", [weekday objectForKey:@"text"]],[NSString stringWithFormat:@"%@", [weekday objectForKey:@"day"]] ,nil] forKeys:[NSArray arrayWithObjects:@"temperature",@"climate",@"day", nil]];
+        
+        NSLog(@"today info : %@", todayWeather);
+        
         UIView *customCell1 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
-        UILabel *temp1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 63, 30)];
-        temp1.text = @"12-23";
-        UIImage *weatherImage1 = [UIImage imageNamed:@"Partly Cloudy.gif"];
+        UILabel *temp1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
+        temp1.text = [todayWeather objectForKey:@"temperature"];
+        UIImage *weatherImage1 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
         UIImageView *weatherImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView1.image = weatherImage1;
         [customCell1 addSubview:weatherImageView1];
         [customCell1 addSubview:temp1];
         UILabel *day1 = [[UILabel alloc] initWithFrame:CGRectMake(5, 80, 58, 30)];
-        day1.text = @"today";
+        day1.text = [todayWeather objectForKey:@"day"];
         customCell1.layer.borderColor = [UIColor grayColor].CGColor;
         customCell1.layer.borderWidth = 1.0f;
         [customCell1 addSubview:day1];
@@ -126,64 +141,72 @@
         
         base+=increament+1;
         
+        todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:1];
+        
         UIView *customCell2 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
-        UILabel *temp2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 63, 30)];
-        temp2.text = @"12-23";
-        UIImage *weatherImage2 = [UIImage imageNamed:@"1.gif"];
+        UILabel *temp2 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
+        temp2.text = [todayWeather objectForKey:@"temperature"];;
+        UIImage *weatherImage2 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
         UIImageView *weatherImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView2.image = weatherImage2;
         [customCell2 addSubview:weatherImageView2];
         [customCell2 addSubview:temp2];
         UILabel *day2 = [[UILabel alloc] initWithFrame:CGRectMake(5, 80, 58, 30)];
-        day2.text = @"sat";
+        day2.text = [todayWeather objectForKey:@"day"];
         customCell2.layer.borderColor = [UIColor grayColor].CGColor;
         customCell2.layer.borderWidth = 1.0f;
         [customCell2 addSubview:day2];
         
         base+=increament+1;
         
+        todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:2];
+        
         UIView *customCell3 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
-        UILabel *temp3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 63, 30)];
-        temp3.text = @"12-23";
-        UIImage *weatherImage3 = [UIImage imageNamed:@"1.gif"];
+        UILabel *temp3 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
+        temp3.text = [todayWeather objectForKey:@"temperature"];;
+        UIImage *weatherImage3 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
         UIImageView *weatherImageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView3.image = weatherImage3;
         [customCell3 addSubview:weatherImageView3];
         [customCell3 addSubview:temp3];
         UILabel *day3 = [[UILabel alloc] initWithFrame:CGRectMake(5, 80, 58, 30)];
-        day3.text = @"sun";
+        day3.text = [todayWeather objectForKey:@"day"];
         customCell3.layer.borderColor = [UIColor grayColor].CGColor;
         customCell3.layer.borderWidth = 1.0f;
         [customCell3 addSubview:day3];
         
         base+=increament+1;
         
+        todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:3];
+        
         UIView *customCell4 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
-        UILabel *temp4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 63, 30)];
-        temp4.text = @"12-23";
-        UIImage *weatherImage4 = [UIImage imageNamed:@"1.gif"];
+        UILabel *temp4 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
+        temp4.text = [todayWeather objectForKey:@"temperature"];;
+        UIImage *weatherImage4 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
         UIImageView *weatherImageView4 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView4.image = weatherImage4;
         [customCell4 addSubview:weatherImageView4];
         [customCell4 addSubview:temp4];
         UILabel *day4 = [[UILabel alloc] initWithFrame:CGRectMake(5, 80, 58, 30)];
-        day4.text = @"mon";
+        day4.text = [todayWeather objectForKey:@"day"];
         customCell4.layer.borderColor = [UIColor grayColor].CGColor;
         customCell4.layer.borderWidth = 1.0f;
         [customCell4 addSubview:day4];
         
         base+=increament+1;
         
+        todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:4];
+        
         UIView *customCell5 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
-        UILabel *temp5 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 63, 30)];
-        temp5.text = @"12-23";
-        UIImage *weatherImage5 = [UIImage imageNamed:@"1.gif"];
+        UILabel *temp5 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
+        temp5.text = [todayWeather objectForKey:@"temperature"];;
+        UIImage *weatherImage5 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
         UIImageView *weatherImageView5 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView5.image = weatherImage5;
         [customCell5 addSubview:weatherImageView5];
         [customCell5 addSubview:temp5];
         UILabel *day5 = [[UILabel alloc] initWithFrame:CGRectMake(5, 80, 58, 30)];
-        day5.text = @"tue";
+        day5.text = [todayWeather objectForKey:@"day"];
         customCell5.layer.borderColor = [UIColor grayColor].CGColor;
         customCell5.layer.borderWidth = 1.0f;
         [customCell5 addSubview:day5];

@@ -247,48 +247,59 @@
     {
         
         
-//        NSUInteger temperature = [[[item objectForKey:@"condition"] objectForKey:@"temp"] integerValue];
-//        NSString *climate = [[item objectForKey:@"condition"] objectForKey:@"text"];
-//        
-//        temperature = (temperature-32)*5/9;
-//        
-//        [self.tableData removeAllObjects];
-//        [self.tableDataSections removeAllObjects];
-//        
-//        
-//        //adding today's data
-//        [tableDataElement removeAllObjects];
+        NSUInteger temperature = [[[item objectForKey:@"condition"] objectForKey:@"temp"] integerValue];
+        NSString *climate = [[item objectForKey:@"condition"] objectForKey:@"text"];
+        
+        temperature = (temperature-32)*5/9;
+        
+        [self.tableData removeAllObjects];
+        [self.tableDataSections removeAllObjects];
+        
+        
+        //adding today's data
+        [tableDataElement removeAllObjects];
+        
+        NSDictionary *todayWeather = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%u°C", temperature],[NSString stringWithFormat:@"%@", climate],@"today" ,nil] forKeys:[NSArray arrayWithObjects:@"temperature",@"climate",@"day", nil]];
+        
 //        [tableDataElement addObject:[NSString stringWithFormat:@"%u C", temperature]];
 //        [tableDataElement addObject:[NSString stringWithFormat:@"%@", climate]];
-//        
-//        [self.tableDataSections addObject:@"Today"];
+        
+        [tableDataElement addObject:todayWeather];
+        
 //        [self.tableData addObject:[[NSArray alloc] initWithArray:tableDataElement]];
-//        
-//        
-//        //weekly weather
-//        
-//        
-//        NSMutableArray *weekWeather = [[item objectForKey:@"forecast"] mutableCopy];
-//        [weekWeather removeObjectAtIndex:0];
-//        
-//        for(NSDictionary *weekday in weekWeather)
-//        {
-//            //        NSLog(@"high-low = %u - %u", [[weekday objectForKey:@"high"] integerValue], [[weekday objectForKey:@"low"] integerValue]);
-//            
-//            [tableDataElement removeAllObjects];
+        
+        
+        //weekly weather
+        
+        
+        NSMutableArray *weekWeather = [[item objectForKey:@"forecast"] mutableCopy];
+        [weekWeather removeObjectAtIndex:0];
+        
+        for(NSDictionary *weekday in weekWeather)
+        {
+            //        NSLog(@"high-low = %u - %u", [[weekday objectForKey:@"high"] integerValue], [[weekday objectForKey:@"low"] integerValue]);
+            
 //            [self.tableDataSections addObject:[weekday objectForKey:@"date"]];
-//            
+            
+            NSDictionary *todayWeather = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%u-%u", ([[weekday objectForKey:@"low"] integerValue]-32)*5/9, ([[weekday objectForKey:@"high"] integerValue]-32)*5/9],[NSString stringWithFormat:@"%@", [weekday objectForKey:@"text"]],[NSString stringWithFormat:@"%@", [weekday objectForKey:@"day"]] ,nil] forKeys:[NSArray arrayWithObjects:@"temperature",@"climate",@"day", nil]];
+            
 //            [tableDataElement addObject:[NSString stringWithFormat:@"%u - %u C", ([[weekday objectForKey:@"low"] integerValue]-32)*5/9, ([[weekday objectForKey:@"high"] integerValue]-32)*5/9]];
 //            
+
 //            [tableDataElement addObject:[NSString stringWithFormat:@"%@", [weekday objectForKey:@"text"]]];
-//            
+            
+            [tableDataElement addObject:todayWeather];
+            
 //            [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
-//            NSLog(@"temp : %u and climate : %@", temperature, climate);
+            NSLog(@"temp : %u and climate : %@", temperature, climate);
+      }
         
+        [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
+    
         NSLog(@"weather info found");
         [self.tableDataSections addObject:@"weather information"];
         [tableDataElement removeAllObjects];
-        [tableDataElement addObject:@"not available"];
+        //[tableDataElement addObject:@"not available"];
         [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
         
     }
