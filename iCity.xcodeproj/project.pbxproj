@@ -17,7 +17,8 @@
 		9557F3B717913AE600D89CCF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9557F3B617913AE600D89CCF /* Default@2x.png */; };
 		9557F3B917913AE600D89CCF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9557F3B817913AE600D89CCF /* Default-568h@2x.png */; };
 		9557F3BC17913AE600D89CCF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9557F3BA17913AE600D89CCF /* MainStoryboard.storyboard */; };
-		9557F3BF17913AE600D89CCF /* iCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9557F3BE17913AE600D89CCF /* iCityViewController.m */; };
+		95BEE9F11791506800B5E5E9 /* iCityTableViewConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BEE9F01791506800B5E5E9 /* iCityTableViewConroller.m */; };
+		95BEE9F31791516900B5E5E9 /* tmp.txt in Resources */ = {isa = PBXBuildFile; fileRef = 95BEE9F21791516900B5E5E9 /* tmp.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +36,9 @@
 		9557F3B617913AE600D89CCF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9557F3B817913AE600D89CCF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9557F3BB17913AE600D89CCF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		9557F3BD17913AE600D89CCF /* iCityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCityViewController.h; sourceTree = "<group>"; };
-		9557F3BE17913AE600D89CCF /* iCityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCityViewController.m; sourceTree = "<group>"; };
+		95BEE9EF1791506800B5E5E9 /* iCityTableViewConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCityTableViewConroller.h; sourceTree = "<group>"; };
+		95BEE9F01791506800B5E5E9 /* iCityTableViewConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCityTableViewConroller.m; sourceTree = "<group>"; };
+		95BEE9F21791516900B5E5E9 /* tmp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tmp.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +88,9 @@
 				9557F3B117913AE600D89CCF /* iCityAppDelegate.h */,
 				9557F3B217913AE600D89CCF /* iCityAppDelegate.m */,
 				9557F3BA17913AE600D89CCF /* MainStoryboard.storyboard */,
-				9557F3BD17913AE600D89CCF /* iCityViewController.h */,
-				9557F3BE17913AE600D89CCF /* iCityViewController.m */,
+				95BEE9EF1791506800B5E5E9 /* iCityTableViewConroller.h */,
+				95BEE9F01791506800B5E5E9 /* iCityTableViewConroller.m */,
+				95BEE9F21791516900B5E5E9 /* tmp.txt */,
 				9557F3A917913AE500D89CCF /* Supporting Files */,
 			);
 			path = iCity;
@@ -164,6 +167,7 @@
 				9557F3B717913AE600D89CCF /* Default@2x.png in Resources */,
 				9557F3B917913AE600D89CCF /* Default-568h@2x.png in Resources */,
 				9557F3BC17913AE600D89CCF /* MainStoryboard.storyboard in Resources */,
+				95BEE9F31791516900B5E5E9 /* tmp.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +180,7 @@
 			files = (
 				9557F3AF17913AE500D89CCF /* main.m in Sources */,
 				9557F3B317913AE600D89CCF /* iCityAppDelegate.m in Sources */,
-				9557F3BF17913AE600D89CCF /* iCityViewController.m in Sources */,
+				95BEE9F11791506800B5E5E9 /* iCityTableViewConroller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +303,7 @@
 				9557F3C417913AE600D89CCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
