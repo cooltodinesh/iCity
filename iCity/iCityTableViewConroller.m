@@ -7,20 +7,30 @@
 //
 
 #import "iCityTableViewConroller.h"
+#import "iCityShowCityInfo.h"
 
 #define CITY_LIST_URL @"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.counties%20where%20place%3D%22IN%22%20order%20by%20name&format=json"
+
+#define WEATHER_URL @"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%3D00000000&format=json"
+
+#define LOCATION_URL @"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20woeid%3D00000000&format=json"
 
 @interface iCityTableViewConroller ()
 
 
 //@property (strong, nonatomic) IBOutlet UISearchBar *citySearchBar;
 
+@property (strong, nonatomic) NSMutableArray *tableData;
+@property (strong, nonatomic) NSMutableArray *tableDataSections;
+@property (strong, nonatomic) UINavigationController *navController;
+
+
 
 @end
 
 @implementation iCityTableViewConroller
 
-@synthesize citySearchList, cityList, cityDictionary;
+@synthesize citySearchList, cityList, cityDictionary, tableData, tableDataSections, navController;
 
 - (void)viewDidLoad
 {
@@ -30,6 +40,9 @@
     
 //    [self.view addSubview:self.citySearchBar];
     
+    self.tableData = [[NSMutableArray alloc] initWithCapacity:10];
+    self.tableDataSections = [[NSMutableArray alloc] initWithCapacity:10];
+
     
     
     [self getCityList];
@@ -112,7 +125,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *city;
     
+    if(tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        //        NSLog(@"%@ selected", [self.citySearchList objectAtIndex:indexPath.row]);
+        
+        city = [[NSString alloc] initWithString:[self.citySearchList objectAtIndex:indexPath.row]];
+        
+    }
+    else
+    {
+        //        NSLog(@"%@ selected", [self.cityList objectAtIndex:indexPath.row]);
+        
+        city = [[NSString alloc] initWithString:[self.cityList objectAtIndex:indexPath.row]];
+    }
+    
+    NSLog(@"selected city : %@",city);
+    
+    [self processCity:city];
+
 }
 
 
@@ -168,5 +200,121 @@
 //    
 //    self.citySearchBar.frame = rect;
 //}
+
+-(void)cancelthis
+{
+    NSLog(@"cancel in main view");
+    [self.navController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)processCity:(NSString *)city
+{
+    
+    NSMutableArray *tableDataElement = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    NSString *woeid = [cityDictionary objectForKey:city];
+    
+    NSLog(@"woeid is : %@",woeid);
+    
+    NSData *weatherData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[WEATHER_URL stringByReplacingOccurrencesOfString:@"00000000" withString:woeid]]];
+    
+    NSLog(@"query for weather : %@", [NSURL URLWithString:[WEATHER_URL stringByReplacingOccurrencesOfString:@"00000000" withString:woeid]]);
+    
+    NSError *error;
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:weatherData options:kNilOptions error:&error];
+    
+    
+    //    NSLog(@"parsed data : %@",jsonData);
+    
+    //NSArray *lcityList = [[[jsonData objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"place"];
+    
+    NSDictionary *item = [[[[jsonData objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"item"];
+    
+    NSString *title = [[[[jsonData objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"title"];
+    
+    [self.tableData removeAllObjects];
+    [self.tableDataSections removeAllObjects];
+    
+    if(![title compare:@"Yahoo! Weather - Error"])
+    {
+        NSLog(@"weather info not found");
+        [self.tableDataSections addObject:@"weather info"];
+        [tableDataElement removeAllObjects];
+        [tableDataElement addObject:@"not available"];
+        [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
+    }
+    else
+    {
+        
+        
+//        NSUInteger temperature = [[[item objectForKey:@"condition"] objectForKey:@"temp"] integerValue];
+//        NSString *climate = [[item objectForKey:@"condition"] objectForKey:@"text"];
+//        
+//        temperature = (temperature-32)*5/9;
+//        
+//        [self.tableData removeAllObjects];
+//        [self.tableDataSections removeAllObjects];
+//        
+//        
+//        //adding today's data
+//        [tableDataElement removeAllObjects];
+//        [tableDataElement addObject:[NSString stringWithFormat:@"%u C", temperature]];
+//        [tableDataElement addObject:[NSString stringWithFormat:@"%@", climate]];
+//        
+//        [self.tableDataSections addObject:@"Today"];
+//        [self.tableData addObject:[[NSArray alloc] initWithArray:tableDataElement]];
+//        
+//        
+//        //weekly weather
+//        
+//        
+//        NSMutableArray *weekWeather = [[item objectForKey:@"forecast"] mutableCopy];
+//        [weekWeather removeObjectAtIndex:0];
+//        
+//        for(NSDictionary *weekday in weekWeather)
+//        {
+//            //        NSLog(@"high-low = %u - %u", [[weekday objectForKey:@"high"] integerValue], [[weekday objectForKey:@"low"] integerValue]);
+//            
+//            [tableDataElement removeAllObjects];
+//            [self.tableDataSections addObject:[weekday objectForKey:@"date"]];
+//            
+//            [tableDataElement addObject:[NSString stringWithFormat:@"%u - %u C", ([[weekday objectForKey:@"low"] integerValue]-32)*5/9, ([[weekday objectForKey:@"high"] integerValue]-32)*5/9]];
+//            
+//            [tableDataElement addObject:[NSString stringWithFormat:@"%@", [weekday objectForKey:@"text"]]];
+//            
+//            [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
+//            NSLog(@"temp : %u and climate : %@", temperature, climate);
+        
+        NSLog(@"weather info found");
+        [self.tableDataSections addObject:@"weather information"];
+        [tableDataElement removeAllObjects];
+        [tableDataElement addObject:@"not available"];
+        [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
+        
+    }
+    
+    //    NSLog(@"week info : %@", [item objectForKey:@"forecast"]);
+    
+    
+    NSLog(@"sections : %@", self.tableDataSections);
+    //    NSLog(@"table data : %@",self.tableData);
+    
+    iCityShowCityInfo *cityInfo = [[iCityShowCityInfo alloc] init];
+    
+    cityInfo.rowArray = [NSArray arrayWithArray:self.tableData];
+    cityInfo.sectionArray = [NSArray arrayWithArray:self.tableDataSections];
+    cityInfo.title = city;
+    
+    cityInfo.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelthis)];
+    
+    self.navController = [[UINavigationController alloc] initWithRootViewController:cityInfo];
+    
+    self.navController.toolbarHidden = NO;
+    self.navController.hidesBottomBarWhenPushed = YES;
+    
+    [self presentViewController:navController animated:YES completion:nil];
+    
+}
+
 
 @end
