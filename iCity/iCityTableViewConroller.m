@@ -17,6 +17,10 @@
 
 #define LOCATION_URL @"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20woeid%3D00000000&format=json"
 
+#define HOSPITAL_URL @"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20google.search%20where%20q%3D%22Hospital%20in%20AAAAAAAA%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+
+#define HOTEL_URL @"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20google.search%20where%20q%3D%22Hotels%2FRestaurent%20in%20AAAAAAAA%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+
 #define GOOGLE_API @"https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q="
 
 #define LOCATION_DATA  @"locationData"
@@ -351,7 +355,7 @@
         NSLog(@"weather info not found");
         [self.tableDataSections addObject:@"Weather NA"];
         [tableDataElement removeAllObjects];
-        [tableDataElement addObject:@"Not available"];
+        [tableDataElement addObject:@"Not available :("];
         [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
     }
     else
@@ -426,10 +430,17 @@
     
     NSLog(@"table data element : %@", tableDataElement);
     
-    
     //get cab info
     
     [self gatherCabInfo:city];
+    
+    //Hospitals
+    
+    [self gatherHospitalInfo:city];
+    
+    //hotels
+    
+    [self gatherHotelInfo:city];
     
     //fetching near facebook friend
     
@@ -458,6 +469,79 @@
         [self presentViewController:navController animated:YES completion:nil];
     
     
+}
+
+-(void)gatherHotelInfo:(NSString*)city
+{
+    NSMutableArray *tableDataElement = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    NSLog(@"hospital from city %@", city);
+    NSData *hotelData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[HOTEL_URL stringByReplacingOccurrencesOfString:@"AAAAAAAA" withString:city]]];
+    
+    NSLog(@"query for hospital : %@", [NSURL URLWithString:[HOTEL_URL stringByReplacingOccurrencesOfString:@"AAAAAAAA" withString:city]]);
+    
+    NSError *error;
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:hotelData options:kNilOptions error:&error];
+    
+    NSLog(@"hospital data : %@",jsonData);
+    
+    NSArray *hospitalArray = [[[jsonData objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"results"];
+    
+    
+    for(NSDictionary *hotel in hospitalArray)
+        
+    {
+        
+        [tableDataElement addObject:hotel];
+    }
+    
+    
+    [self.tableDataSections addObject:@"Hotels & Restaurants" ];
+    
+    if(tableDataElement.count)
+    {
+        [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
+    }
+    
+
+    
+    
+}
+
+-(void)gatherHospitalInfo:(NSString*)city
+{
+    
+    NSMutableArray *tableDataElement = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    NSLog(@"hospital from city %@", city);
+    NSData *hospitalData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[HOSPITAL_URL stringByReplacingOccurrencesOfString:@"AAAAAAAA" withString:city]]];
+    
+    NSLog(@"query for hospital : %@", [NSURL URLWithString:[HOSPITAL_URL stringByReplacingOccurrencesOfString:@"AAAAAAAA" withString:city]]);
+    
+    NSError *error;
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:hospitalData options:kNilOptions error:&error];
+    
+    NSLog(@"hospital data : %@",jsonData);
+    
+    NSArray *hospitalArray = [[[jsonData objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"results"];
+
+
+    for(NSDictionary *hospital in hospitalArray)
+    
+    {
+    
+        [tableDataElement addObject:hospital];
+    }
+    
+    
+    [self.tableDataSections addObject:@"Hospitals" ];
+    
+    if(tableDataElement.count)
+    {
+        [self.tableData addObject:[NSArray arrayWithArray:tableDataElement]];
+    }
+
+
 }
 
 -(void)gatherCabInfo:(NSString*)city
@@ -837,9 +921,9 @@
                 
                 UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",[friend userID]]];
                 
-                NSLog(@"image = %@",[NSString stringWithFormat:@"%@.jpg",[friend userID]]);
+//                NSLog(@"image = %@",[NSString stringWithFormat:@"%@.jpg",[friend userID]]);
                 
-                NSLog(@"imagedata=%@",image);
+//                NSLog(@"imagedata=%@",image);
                 
                 
                 if(!image)
@@ -871,6 +955,9 @@
     
     
 }
+
+
+
 
 
 

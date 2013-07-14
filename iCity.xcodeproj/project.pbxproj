@@ -349,6 +349,8 @@
 		955CA7F117922157005EAB47 /* 100006000365849.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 955CA6A617922157005EAB47 /* 100006000365849.jpg */; };
 		955CA7F217922157005EAB47 /* 100006147788168.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 955CA6A717922157005EAB47 /* 100006147788168.jpg */; };
 		955CA7F317922157005EAB47 /* 100006212081511.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 955CA6A817922157005EAB47 /* 100006212081511.jpg */; };
+		955CA7F717923395005EAB47 /* hotel.png in Resources */ = {isa = PBXBuildFile; fileRef = 955CA7F617923395005EAB47 /* hotel.png */; };
+		955CA7F917923504005EAB47 /* hospital.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 955CA7F817923504005EAB47 /* hospital.jpg */; };
 		95BEE9F11791506800B5E5E9 /* iCityTableViewConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BEE9F01791506800B5E5E9 /* iCityTableViewConroller.m */; };
 		95BEE9F517915E1F00B5E5E9 /* rawcode.txt in Resources */ = {isa = PBXBuildFile; fileRef = 95BEE9F417915E1F00B5E5E9 /* rawcode.txt */; };
 		95BEE9F91791610600B5E5E9 /* iCityFriendDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BEE9F81791610600B5E5E9 /* iCityFriendDetails.m */; };
@@ -745,6 +747,8 @@
 		955CA6A617922157005EAB47 /* 100006000365849.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 100006000365849.jpg; sourceTree = "<group>"; };
 		955CA6A717922157005EAB47 /* 100006147788168.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 100006147788168.jpg; sourceTree = "<group>"; };
 		955CA6A817922157005EAB47 /* 100006212081511.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 100006212081511.jpg; sourceTree = "<group>"; };
+		955CA7F617923395005EAB47 /* hotel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotel.png; sourceTree = "<group>"; };
+		955CA7F817923504005EAB47 /* hospital.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hospital.jpg; sourceTree = "<group>"; };
 		95BEE9EF1791506800B5E5E9 /* iCityTableViewConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCityTableViewConroller.h; sourceTree = "<group>"; };
 		95BEE9F01791506800B5E5E9 /* iCityTableViewConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCityTableViewConroller.m; sourceTree = "<group>"; };
 		95BEE9F417915E1F00B5E5E9 /* rawcode.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rawcode.txt; path = ../../../../Desktop/Dropbox/rawcode.txt; sourceTree = "<group>"; };
@@ -939,6 +943,8 @@
 		9557F3A917913AE500D89CCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				955CA7F817923504005EAB47 /* hospital.jpg */,
+				955CA7F617923395005EAB47 /* hotel.png */,
 				95DC5EBE1791D8E400D56D2D /* facebook-ios-sdk */,
 				95DC5EB61791CF7E00D56D2D /* bg_final_center_i.png */,
 				95DC5EBC1791D04200D56D2D /* Default@2x.png */,
@@ -1833,6 +1839,8 @@
 				955CA7F117922157005EAB47 /* 100006000365849.jpg in Resources */,
 				955CA7F217922157005EAB47 /* 100006147788168.jpg in Resources */,
 				955CA7F317922157005EAB47 /* 100006212081511.jpg in Resources */,
+				955CA7F717923395005EAB47 /* hotel.png in Resources */,
+				955CA7F917923504005EAB47 /* hospital.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

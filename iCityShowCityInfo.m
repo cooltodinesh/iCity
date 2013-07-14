@@ -13,11 +13,14 @@
 #import "MLTableAlert.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface iCityShowCityInfo ()
+@interface iCityShowCityInfo () <UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSMutableSet *phoneNumbers;
 @property (strong, nonatomic) NSArray *phoneNumberListArray;
 @property (strong, nonatomic) MLTableAlert *alert;
+@property (strong, nonatomic) UIAlertView *alertView;
+@property (strong, nonatomic) NSString *myNumber;
+@property (strong, nonatomic) NSString *myName;
 
 @end
 
@@ -25,7 +28,7 @@
 
 
 
-@synthesize sectionArray, rowArray, phoneNumbers, alert, phoneNumberListArray;
+@synthesize sectionArray, rowArray, phoneNumbers, alert, phoneNumberListArray, alertView, myNumber, myName;
 
 
 - (void)viewDidLoad
@@ -48,7 +51,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    NSLog(@"numberOfSectionsInTableView");
+//    NSLog(@"numberOfSectionsInTableView");
     
     // Return the number of sections.
     return self.sectionArray.count;
@@ -56,7 +59,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"numberOfRowsInSection");
+//    NSLog(@"numberOfRowsInSection");
     
     // Return the number of rows in the section.
     if (section == 0)
@@ -71,14 +74,14 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSLog(@"titleForHeaderInSection");
+//    NSLog(@"titleForHeaderInSection");
     return [self.sectionArray objectAtIndex:section];
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
-    NSLog(@"viewForHeaderInSection");
+//    NSLog(@"viewForHeaderInSection");
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     
@@ -149,6 +152,20 @@
     {
         cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
         cell.imageView.image = [UIImage imageNamed:@"taxi.jpg"];
+        
+    }
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hospitals"])
+    {
+        
+        cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
+        cell.imageView.image = [UIImage imageNamed:@"hospital.jpg"];
+        
+    }
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hotels & Restaurants"])
+    {
+        
+        cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
+        cell.imageView.image = [UIImage imageNamed:@"hotel.png"];
         
     }
     else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Weather"])
@@ -298,7 +315,15 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
         
     }
-    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Facebook friend nearby"])
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hospitals"])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+    }
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hotels & Restaurants"])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+    }
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Facebook Friends Nearby"])
     {
         
         [self.phoneNumbers removeAllObjects];
@@ -324,7 +349,7 @@
                         
                     } else {
                         
-                        
+                        NSString *contactName;
                         
                         CFArrayRef allPeople =    ABAddressBookCopyArrayOfAllPeople( addressBook );
                         CFIndex nPeople = ABAddressBookGetPersonCount( addressBook );
@@ -336,10 +361,11 @@
                             ABMutableMultiValueRef multi = ABRecordCopyValue(ref, kABPersonPhoneProperty);
                             
                             
-                            NSString *contactName = (__bridge NSString *)(ABRecordCopyCompositeName(ref));
+                            contactName = (__bridge NSString *)(ABRecordCopyCompositeName(ref));
                             
                             if(![name compare:contactName])
                             {
+                                self.myName = contactName;
                                 
                                 for (CFIndex i = 0; i < ABMultiValueGetCount(multi); i++)
                                     
@@ -389,10 +415,18 @@
                             [self.alert configureSelectionBlock:^(NSIndexPath *selectedIndex){
                                 
                                 NSString *tmpNumber = [self.phoneNumberListArray objectAtIndex:selectedIndex.row];
+                                self.myNumber = tmpNumber;
                                 
-                                NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"tel:", tmpNumber]];
                                 
-                                [[UIApplication sharedApplication]openURL:url];
+                                
+                                self.alertView = [[UIAlertView alloc] initWithTitle:@"Choose one"
+                                                                            message:[NSString stringWithFormat:@"How would you like to reach %@ on %@?", self.myName, self.myNumber]
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"Cancel"
+                                                                  otherButtonTitles:@"Call", @"Message",nil
+                                                  ];
+                                [self.alertView show];
+
                                 
                                 
                             } andCompletionBlock:^{
@@ -424,6 +458,31 @@
             
             
         }
+        
+        
+    }
+    
+    
+}
+
+-(void)alertView:(UIAlertView *)alertLocalView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *pressedButton = [alertLocalView buttonTitleAtIndex:buttonIndex];
+    
+    if( [pressedButton isEqualToString:@"Call"] )
+    {
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"tel:", self.myNumber]];
+        
+        [[UIApplication sharedApplication]openURL:url];
+    }
+    else if ( [pressedButton isEqualToString:@"Message"] )
+    {
+        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"sms:", self.myNumber]];
+        
+        [[UIApplication sharedApplication]openURL:url];
+    }
+    else if ( [pressedButton isEqualToString:@"Cancel"] )
+    {
         
         
     }
