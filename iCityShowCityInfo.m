@@ -27,18 +27,12 @@
 
 @synthesize sectionArray, rowArray, phoneNumbers, alert, phoneNumberListArray;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"show city info view did load");
     
     self.phoneNumbers = [[NSMutableSet alloc] initWithCapacity:10];
     
@@ -54,12 +48,15 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
+    NSLog(@"numberOfSectionsInTableView");
+    
     // Return the number of sections.
     return self.sectionArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"numberOfRowsInSection");
     
     // Return the number of rows in the section.
     if (section == 0)
@@ -74,13 +71,54 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    NSLog(@"titleForHeaderInSection");
     return [self.sectionArray objectAtIndex:section];
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    NSLog(@"viewForHeaderInSection");
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.opaque = NO;
+    headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:18];
+    headerLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    headerLabel.frame = CGRectMake(11,-11, 320.0, 44.0);
+    headerLabel.textAlignment = NSTextAlignmentLeft;
+    headerLabel.text = [self.sectionArray objectAtIndex:section];
+    [headerView addSubview:headerLabel];
+    
+    //        headerView.layer.borderColor = [UIColor blackColor].CGColor;
+    //        headerView.layer.borderWidth = 1;
+    
+    
+    [headerView setBackgroundColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.7]];
+    
+    
+    
+    
+    
+    return headerView;
+    
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+//    NSLog(@"cellForRowAtIndexPath : %@", indexPath);
+    
+    
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    UITableViewCell *cell =   [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
     if (cell == nil) {
         
@@ -89,7 +127,9 @@
     
     // Configure the cell...
     
-    if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Facebook friend nearby"])
+    
+    
+    if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Facebook Friends Nearby"])
     {
         
         if([[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] isKindOfClass:[NSDictionary class]])
@@ -105,13 +145,13 @@
         
         
     }
-    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Car Rentals available"])
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Taxi"])
     {
         cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"taxi.jpg"];
         
     }
-    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"weather information"])
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Weather"])
     {
         int base=0;
         int increament = 63;
@@ -122,7 +162,7 @@
         
 //        NSDictionary *todayWeather = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%u - %u", ([[weekday objectForKey:@"low"] integerValue]-32)*5/9, ([[weekday objectForKey:@"high"] integerValue]-32)*5/9],[NSString stringWithFormat:@"%@", [weekday objectForKey:@"text"]],[NSString stringWithFormat:@"%@", [weekday objectForKey:@"day"]] ,nil] forKeys:[NSArray arrayWithObjects:@"temperature",@"climate",@"day", nil]];
         
-        NSLog(@"today info : %@", todayWeather);
+//        NSLog(@"today info : %@", todayWeather);
         
         UIView *customCell1 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
         UILabel *temp1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
@@ -234,8 +274,12 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0 )
+    
+//    NSLog(@"heightForRowAtIndexPath");
+    
+    if(indexPath.section == 0 &&  [[self.rowArray objectAtIndex:indexPath.section] count]>1)
     {
+        
         return 110;
     }
     else
@@ -245,7 +289,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Car Rentals available"])
+    
+//    NSLog(@"didSelectRowAtIndexPath");
+    
+    
+    if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Taxi"])
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
         

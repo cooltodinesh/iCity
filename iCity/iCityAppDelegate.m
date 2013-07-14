@@ -7,13 +7,25 @@
 //
 
 #import "iCityAppDelegate.h"
+#define APP_ID @"310977542370966"
 
 @implementation iCityAppDelegate
+
+@synthesize facebook, window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    facebook = [[Facebook alloc] initWithAppId:APP_ID andDelegate:nil];
+    
+    
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    return [facebook handleOpenURL:url];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iCityTableViewConroller : UITableViewController
+@interface iCityTableViewConroller : UITableViewController 
 
 @property(nonatomic, strong) NSDictionary *cityDictionary;
 @property(nonatomic, strong) NSArray *cityList;
