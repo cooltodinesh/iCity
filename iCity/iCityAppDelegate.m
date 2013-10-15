@@ -9,17 +9,40 @@
 #import "iCityAppDelegate.h"
 #define APP_ID @"310977542370966"
 
+#define GOOGLE_TRACKING_ID @"UA-41155029-3"
+
 @implementation iCityAppDelegate
 
-@synthesize facebook, window;
+@synthesize facebook, window, navigationController, mainView, cityFriendDictionaryArrayG, cityToFriendMappingG, cityDictionary, allCityTaxiNumber;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    // Optional: set debug to YES for extra debugging information.
+    [GAI sharedInstance].debug = YES;
+    // Create tracker instance.
+    self.tracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_TRACKING_ID];
+    
+    
+    
     facebook = [[Facebook alloc] initWithAppId:APP_ID andDelegate:nil];
     
     
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    self.mainView = [storyBoard instantiateViewControllerWithIdentifier:@"iCityMainViewController"];
+    
+    self.window.rootViewController = self.mainView;
+
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 
@@ -54,5 +77,31 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+-(BOOL)isInternetConnected
+{
+    NSLog(@"Waiting for internet connection");
+    
+    
+    NSURL *url=[NSURL URLWithString:@"http://www.google.com"];
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"HEAD"];
+    NSHTTPURLResponse *response;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error: NULL];
+    
+    
+    if([response statusCode]==200)
+    {
+        NSLog(@"internet found");
+        return YES;
+    }
+    else
+    {
+        NSLog(@"internet not found");
+        return NO;
+    }
+    
+}
+
 
 @end

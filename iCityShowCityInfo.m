@@ -12,8 +12,17 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "MLTableAlert.h"
 #import <QuartzCore/QuartzCore.h>
+#import "iCityAppDelegate.h"
+#import "iCityWebViewController.h"
+
+#include <SDWebImage/UIImageView+WebCache.h>
+
 
 @interface iCityShowCityInfo () <UIAlertViewDelegate>
+{
+    NSArray *phoneArray;
+    NSURL *visitURL;
+}
 
 @property (strong, nonatomic) NSMutableSet *phoneNumbers;
 @property (strong, nonatomic) NSArray *phoneNumberListArray;
@@ -21,23 +30,39 @@
 @property (strong, nonatomic) UIAlertView *alertView;
 @property (strong, nonatomic) NSString *myNumber;
 @property (strong, nonatomic) NSString *myName;
+@property (strong, nonatomic) NSString *cabTitle;
 
 @end
 
 @implementation iCityShowCityInfo
 
-
-
-@synthesize sectionArray, rowArray, phoneNumbers, alert, phoneNumberListArray, alertView, myNumber, myName;
+@synthesize sectionArray, rowArray, phoneNumbers, alert, phoneNumberListArray, alertView, myNumber, myName, cabTitle;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    NSLog(@"show city info view did load");
+//    NSLog(@"show city info view did load");
     
     self.phoneNumbers = [[NSMutableSet alloc] initWithCapacity:10];
+    
+    
+    iCityAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    
+    BOOL connected = [delegate isInternetConnected];
+    
+    if(!connected)
+    {
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Network Error!!"
+                                                          message:@"No Internet connection found"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        
+        [message show];
+    }
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -104,10 +129,7 @@
     
     
     
-    
-    
     return headerView;
-    
     
     
 }
@@ -138,7 +160,11 @@
         if([[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] isKindOfClass:[NSDictionary class]])
         {
             cell.textLabel.text = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"name"];
-            cell.imageView.image = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"small_pic"];
+//            cell.imageView.image = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"small_pic"];
+            
+            [cell.imageView setImageWithURL:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"small_pic"] placeholderImage:[UIImage imageNamed:@"dummy.gif"]];
+            
+
         }
         else
         {
@@ -150,20 +176,24 @@
     }
     else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Taxi"])
     {
-        cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
+//        cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
+        
+        cell.textLabel.text = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"cabname"];
+        
         cell.imageView.image = [UIImage imageNamed:@"taxi.jpg"];
         
     }
     else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hospitals"])
     {
-        
+        self.cabTitle = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
         cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
         cell.imageView.image = [UIImage imageNamed:@"hospital.jpg"];
         
     }
-    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hotels & Restaurants"])
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hotels"])
     {
         
+        self.cabTitle = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
         cell.textLabel.text =  [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"titleNoFormatting"];
         cell.imageView.image = [UIImage imageNamed:@"hotel.png"];
         
@@ -184,7 +214,13 @@
         UIView *customCell1 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
         UILabel *temp1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
         temp1.text = [todayWeather objectForKey:@"temperature"];
-        UIImage *weatherImage1 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
+        UIImage *weatherImage1 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        
+        if(!weatherImage1)
+        {
+            weatherImage1 = [UIImage imageNamed:@"defaultweather.gif"];
+        }
+        
         UIImageView *weatherImageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView1.image = weatherImage1;
         [customCell1 addSubview:weatherImageView1];
@@ -195,6 +231,8 @@
         customCell1.layer.borderWidth = 1.0f;
         [customCell1 addSubview:day1];
         
+//        NSLog(@"no space weather = %@",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]);
+        
         
         base+=increament+1;
         
@@ -203,7 +241,13 @@
         UIView *customCell2 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
         UILabel *temp2 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
         temp2.text = [todayWeather objectForKey:@"temperature"];;
-        UIImage *weatherImage2 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
+        UIImage *weatherImage2 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        
+        if(!weatherImage2)
+        {
+            weatherImage2 = [UIImage imageNamed:@"defaultweather.gif"];
+        }
+        
         UIImageView *weatherImageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView2.image = weatherImage2;
         [customCell2 addSubview:weatherImageView2];
@@ -216,12 +260,20 @@
         
         base+=increament+1;
         
+//        NSLog(@"no space weather = %@",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]);
+        
         todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:2];
         
         UIView *customCell3 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
         UILabel *temp3 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
         temp3.text = [todayWeather objectForKey:@"temperature"];;
-        UIImage *weatherImage3 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
+        UIImage *weatherImage3 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        
+        if(!weatherImage3)
+        {
+            weatherImage3 = [UIImage imageNamed:@"defaultweather.gif"];
+        }
+        
         UIImageView *weatherImageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView3.image = weatherImage3;
         [customCell3 addSubview:weatherImageView3];
@@ -234,12 +286,20 @@
         
         base+=increament+1;
         
+//        NSLog(@"no space weather = %@",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]);
+        
         todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:3];
         
         UIView *customCell4 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
         UILabel *temp4 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
         temp4.text = [todayWeather objectForKey:@"temperature"];;
-        UIImage *weatherImage4 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
+        UIImage *weatherImage4 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        
+        if(!weatherImage4)
+        {
+            weatherImage4 = [UIImage imageNamed:@"defaultweather.gif"];
+        }
+        
         UIImageView *weatherImageView4 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView4.image = weatherImage4;
         [customCell4 addSubview:weatherImageView4];
@@ -252,12 +312,21 @@
         
         base+=increament+1;
         
+//        NSLog(@"no space weather = %@",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]);
+        
         todayWeather = [[rowArray objectAtIndex:indexPath.section] objectAtIndex:4];
         
         UIView *customCell5 = [[UIView alloc] initWithFrame:CGRectMake(base, -2, base, 112)];
         UILabel *temp5 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 53, 30)];
         temp5.text = [todayWeather objectForKey:@"temperature"];;
-        UIImage *weatherImage5 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[todayWeather objectForKey:@"climate"]]];
+        UIImage *weatherImage5 = [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        
+        
+        if(!weatherImage5)
+        {
+            weatherImage5 = [UIImage imageNamed:@"defaultweather.gif"];
+        }
+        
         UIImageView *weatherImageView5 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 30, 63, 60)];
         weatherImageView5.image = weatherImage5;
         [customCell5 addSubview:weatherImageView5];
@@ -267,6 +336,8 @@
         customCell5.layer.borderColor = [UIColor grayColor].CGColor;
         customCell5.layer.borderWidth = 1.0f;
         [customCell5 addSubview:day5];
+        
+//        NSLog(@"no space weather = %@",[(NSString*)[todayWeather objectForKey:@"climate"] stringByReplacingOccurrencesOfString:@" " withString:@""]);
         
         [cell.viewForBaselineLayout addSubview:customCell1 ];
         [cell.viewForBaselineLayout addSubview:customCell2 ];
@@ -279,9 +350,6 @@
         cell.textLabel.text =  [[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         cell.imageView.image = nil;
     }
-    
-    
-    
     
     
     //NSLog(@"section : %u index : %u", indexPath.section,indexPath.row);
@@ -312,30 +380,164 @@
     
     if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Taxi"])
     {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+        
+        BOOL urlFound;
+        BOOL numberFound;
+        NSString *cabname = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"cabname"];
+        
+        self.cabTitle = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"cabname"];
+
+        
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+        
+        
+        if( [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"number"] )
+        {
+            numberFound = YES;
+            phoneArray = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"number"];
+//            NSLog(@"has number");
+//            NSLog(@"number=%@", phoneArray);
+
+        }
+        else
+        {
+            numberFound = NO;
+//            NSLog(@"number not found");
+        }
+        
+        
+        if( [[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"] isKindOfClass:[NSNull class]])
+
+        {
+//            NSLog(@"URL is not present");
+            urlFound = NO;
+            
+        }
+        else
+        {
+            
+            urlFound = YES;
+            visitURL = [NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]];
+//            NSLog(@"URL is present %@",[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]);
+        }
+        
+        if ( urlFound && numberFound  )
+        {
+            
+            self.alertView = [[UIAlertView alloc] initWithTitle:cabname
+                                                        message:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles: @"Call Taxi", @"Visit website",nil
+                              ];
+            [self.alertView show];
+
+            
+        }
+        else if ( urlFound )
+        {
+            
+//            [[UIApplication sharedApplication] openURL:visitURL];
+            UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            
+            iCityWebViewController *web = [storyBoard instantiateViewControllerWithIdentifier:@"iCityWebViewController"];
+            web.url = visitURL;
+            
+            web.title = self.cabTitle;
+            
+            [self.navigationController pushViewController:web animated:YES];
+            
+        }
+        else if ( numberFound )
+        {
+            
+            self.alert = [MLTableAlert tableAlertWithTitle:@"Choose the number" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+                          {
+                              return [phoneArray count];
+                          }
+                                                  andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *indexPath)
+                          {
+                              static NSString *CellIdentifier = @"CellIdentifier";
+                              UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
+                              if (cell == nil)
+                                  cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                              
+                              cell.textLabel.text = [NSString stringWithFormat:@"%@", [phoneArray objectAtIndex:indexPath.row] ];
+                              
+                              return cell;
+                          }];
+            
+            // Setting custom alert height
+            self.alert.height = 250;
+            
+            [self.alert configureSelectionBlock:^(NSIndexPath *selectedIndex){
+                
+                NSString *tmpNumber = [phoneArray objectAtIndex:selectedIndex.row];
+                
+//                NSString * strippedNumber = [number stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [number length])];
+
+                NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@:%@",@"tel:",[tmpNumber stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [tmpNumber length])] ]];
+                
+                [[UIApplication sharedApplication]openURL:url];
+                
+                
+            } andCompletionBlock:^{
+//                NSLog(@"No number selected");
+            }];
+            
+            // show the alert
+            [self.alert show];
+            
+            
+        }
         
     }
     else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hospitals"])
     {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+        
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        
+        visitURL = [NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]];
+        
+        iCityWebViewController *web = [storyBoard instantiateViewControllerWithIdentifier:@"iCityWebViewController"];
+        web.url = visitURL;
+        
+        web.title = self.cabTitle;
+        
+        [self.navigationController pushViewController:web animated:YES];
+        
+        
     }
-    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hotels & Restaurants"])
+    else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Hotels"])
     {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+        
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        
+        visitURL = [NSURL URLWithString:[[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"url"]];
+        
+        iCityWebViewController *web = [storyBoard instantiateViewControllerWithIdentifier:@"iCityWebViewController"];
+        web.url = visitURL;
+        
+        web.title = self.cabTitle;
+        
+        [self.navigationController pushViewController:web animated:YES];
+        
     }
     else if(![(NSString*)[self.sectionArray objectAtIndex:indexPath.section] compare:@"Facebook Friends Nearby"])
     {
         
         [self.phoneNumbers removeAllObjects];
         
-        NSLog(@"selected fb friend");
+//        NSLog(@"selected fb friend");
         
         if([[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] isKindOfClass:[NSDictionary class]])
         {
-            NSLog(@"fetching contacts");
+//            NSLog(@"fetching contacts");
             
             NSString *name = [[[rowArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"name"];
-            NSLog(@"name from fb = %@",name);
+//            NSLog(@"name from fb = %@",name);
             
             CFErrorRef * error = NULL;
             ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
@@ -345,7 +547,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (!granted) {
                         
-                        NSLog(@"no permission granted");
+//                        NSLog(@"no permission granted");
                         
                     } else {
                         
@@ -359,12 +561,16 @@
                             ABRecordRef ref = CFArrayGetValueAtIndex( allPeople, i );
                             
                             ABMutableMultiValueRef multi = ABRecordCopyValue(ref, kABPersonPhoneProperty);
-                            
-                            
+
                             contactName = (__bridge NSString *)(ABRecordCopyCompositeName(ref));
                             
                             if(![name compare:contactName])
-                            {
+                            {    
+                                
+//                                NSLog(@"fb name is : %@", ABRecordCopyValue(ref, kABPersonSocialProfileServiceFacebook));
+                                
+//                                NSLog(@"fb name is : %@", ABRecordCopyValue(ref, kABPersonSocialProfileServiceFacebook));
+                                
                                 self.myName = contactName;
                                 
                                 for (CFIndex i = 0; i < ABMultiValueGetCount(multi); i++)
@@ -390,37 +596,9 @@
                         
                         if(self.phoneNumbers.count)
                         {
-                            self.phoneNumberListArray = [self.phoneNumbers allObjects];
-                            
-                            // create the alert
-                            self.alert = [MLTableAlert tableAlertWithTitle:@"Choose the number" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
-                                          {
-                                              return [self.phoneNumberListArray count];
-                                          }
-                                                                  andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *indexPath)
-                                          {
-                                              static NSString *CellIdentifier = @"CellIdentifier";
-                                              UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
-                                              if (cell == nil)
-                                                  cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                                              
-                                              cell.textLabel.text = [NSString stringWithFormat:@"%@", [self.phoneNumberListArray objectAtIndex:indexPath.row] ];
-                                              
-                                              return cell;
-                                          }];
-                            
-                            // Setting custom alert height
-                            self.alert.height = 250;
-                            
-                            [self.alert configureSelectionBlock:^(NSIndexPath *selectedIndex){
-                                
-                                NSString *tmpNumber = [self.phoneNumberListArray objectAtIndex:selectedIndex.row];
-                                self.myNumber = tmpNumber;
-                                
-                                
-                                
+                                                            
                                 self.alertView = [[UIAlertView alloc] initWithTitle:@"Choose one"
-                                                                            message:[NSString stringWithFormat:@"How would you like to reach %@ on %@?", self.myName, self.myNumber]
+                                                                            message:[NSString stringWithFormat:@"How would you like to reach %@ ?", self.myName]
                                                                            delegate:self
                                                                   cancelButtonTitle:@"Cancel"
                                                                   otherButtonTitles:@"Call", @"Message",nil
@@ -428,19 +606,10 @@
                                 [self.alertView show];
 
                                 
-                                
-                            } andCompletionBlock:^{
-                                NSLog(@"No number selected");
-                            }];
-                            
-                            // show the alert
-                            [self.alert show];
-                            
-                            
                         }
                         else
                         {
-                            NSLog(@"No numbers found");
+//                            NSLog(@"No numbers found");
                             
                             UIAlertView *noContactAlert = [[UIAlertView alloc] initWithTitle:@"Sorry!!" message:@"No phone number found" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
                             
@@ -453,15 +622,9 @@
                 });
             });
             
-            
-            
-            
-            
         }
         
-        
     }
-    
     
 }
 
@@ -471,21 +634,158 @@
     
     if( [pressedButton isEqualToString:@"Call"] )
     {
-        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"tel:", self.myNumber]];
         
-        [[UIApplication sharedApplication]openURL:url];
+        NSArray *array = [NSArray arrayWithArray:[self.phoneNumbers allObjects]];
+
+        self.alert = [MLTableAlert tableAlertWithTitle:@"Choose the number" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+                      {
+                          return [array count];
+                      }
+                                              andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *indexPath)
+                      {
+                          static NSString *CellIdentifier = @"CellIdentifier";
+                          UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
+                          if (cell == nil)
+                              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                          
+                          cell.textLabel.text = [NSString stringWithFormat:@"%@", [array objectAtIndex:indexPath.row] ];
+                          
+                          return cell;
+                      }];
+        
+        // Setting custom alert height
+        self.alert.height = 250;
+        
+        [self.alert configureSelectionBlock:^(NSIndexPath *selectedIndex){
+            
+            NSString *tmpNumber = [array objectAtIndex:selectedIndex.row];
+            
+            //            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",tmpNumber]];
+            
+            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@:%@",@"tel:",[tmpNumber stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [tmpNumber length])]]];
+            
+            
+            [[UIApplication sharedApplication]openURL:url];
+            
+            
+        } andCompletionBlock:^{
+//            NSLog(@"No number selected");
+        }];
+        
+        // show the alert
+        [self.alert show];
+        
+        
+        
+        
     }
     else if ( [pressedButton isEqualToString:@"Message"] )
     {
-        NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"sms:", self.myNumber]];
         
-        [[UIApplication sharedApplication]openURL:url];
+        
+        NSArray *array = [NSArray arrayWithArray:[self.phoneNumbers allObjects]];
+        
+        self.alert = [MLTableAlert tableAlertWithTitle:@"Choose the number" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+                      {
+                          return [array count];
+                      }
+                                              andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *indexPath)
+                      {
+                          static NSString *CellIdentifier = @"CellIdentifier";
+                          UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
+                          if (cell == nil)
+                              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                          
+                          cell.textLabel.text = [NSString stringWithFormat:@"%@", [array objectAtIndex:indexPath.row] ];
+                          
+                          return cell;
+                      }];
+        
+        // Setting custom alert height
+        self.alert.height = 250;
+        
+        [self.alert configureSelectionBlock:^(NSIndexPath *selectedIndex){
+            
+            NSString *tmpNumber = [array objectAtIndex:selectedIndex.row];
+            
+            //            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",tmpNumber]];
+            
+            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@:%@",@"sms:",[tmpNumber stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [tmpNumber length])]]];
+            
+            
+            [[UIApplication sharedApplication]openURL:url];
+            
+            
+        } andCompletionBlock:^{
+//            NSLog(@"No number selected");
+        }];
+        
+        // show the alert
+        [self.alert show];
+        
+        
+    }
+    else if ( [pressedButton isEqualToString:@"Call Taxi"] )
+    {
+        self.alert = [MLTableAlert tableAlertWithTitle:@"Choose the number" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+                      {
+                          return [phoneArray count];
+                      }
+                                              andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *indexPath)
+                      {
+                          static NSString *CellIdentifier = @"CellIdentifier";
+                          UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
+                          if (cell == nil)
+                              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                          
+                          cell.textLabel.text = [NSString stringWithFormat:@"%@", [phoneArray objectAtIndex:indexPath.row] ];
+                          
+                          return cell;
+                      }];
+        
+        // Setting custom alert height
+        self.alert.height = 250;
+        
+        [self.alert configureSelectionBlock:^(NSIndexPath *selectedIndex){
+            
+            NSString *tmpNumber = [phoneArray objectAtIndex:selectedIndex.row];
+            
+//            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",tmpNumber]];
+            
+            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@:%@",@"tel:",[tmpNumber stringByReplacingOccurrencesOfString:@"[^0-9]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [tmpNumber length])]]];
+            
+            
+            [[UIApplication sharedApplication]openURL:url];
+            
+            
+        } andCompletionBlock:^{
+//            NSLog(@"No number selected");
+        }];
+        
+        // show the alert
+        [self.alert show];
+    }
+    else if ( [pressedButton isEqualToString:@"Visit website"] )
+    {
+//        [[UIApplication sharedApplication] openURL:visitURL];
+        
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        
+        iCityWebViewController *web = [storyBoard instantiateViewControllerWithIdentifier:@"iCityWebViewController"];
+        web.url = visitURL;
+        
+        web.title = self.cabTitle;
+        
+        [self.navigationController pushViewController:web animated:YES];
+
+        
     }
     else if ( [pressedButton isEqualToString:@"Cancel"] )
     {
         
         
     }
+
     
     
 }

@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="TF9-nJ-BQS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" initialViewController="X2R-qX-jUb">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <development version="4600" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--I City Table View Conroller-->
         <scene sceneID="JS9-IP-MXS">
             <objects>
-                <tableViewController id="TF9-nJ-BQS" customClass="iCityTableViewConroller" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="iCityTableViewConroller" storyboardIdentifier="iCityTableViewConroller" id="TF9-nJ-BQS" customClass="iCityTableViewConroller" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="q13-dr-gqP">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="lx5-e8-uQW">
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search your city here" id="ZWL-i1-Oh7">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
-                                <outlet property="delegate" destination="TF9-nJ-BQS" id="Wig-j5-LPh"/>
+                                <outlet property="delegate" destination="TF9-nJ-BQS" id="sx4-ci-EGu"/>
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="sIw-g8-6EE">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="yzw-7i-tA7" detailTextLabel="rAf-S1-rQa" style="IBUITableViewCellStyleValue2" id="sIw-g8-6EE">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzw-7i-tA7">
+                                            <rect key="frame" x="34" y="-15" width="25" height="15"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                            <color key="textColor" red="0.32156862745098042" green="0.40000000000000002" blue="0.56862745098039214" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAf-S1-rQa">
+                                            <rect key="frame" x="43" y="0.0" width="41" height="18"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -37,21 +53,22 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="searchDisplayController" destination="Uu0-I9-Hyu" id="zLW-Me-ykM"/>
+                        <outlet property="searchBar" destination="ZWL-i1-Oh7" id="zJw-Uk-J5l"/>
+                        <outlet property="searchDisplayController" destination="iuM-DT-OFz" id="zM8-cX-NuU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N4I-Br-YA7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="Uu0-I9-Hyu">
+                <searchDisplayController id="iuM-DT-OFz">
                     <connections>
-                        <outlet property="delegate" destination="TF9-nJ-BQS" id="Bsn-IR-QOn"/>
-                        <outlet property="searchBar" destination="lx5-e8-uQW" id="kZo-US-iXK"/>
-                        <outlet property="searchContentsController" destination="TF9-nJ-BQS" id="Gd0-Lj-LNG"/>
-                        <outlet property="searchResultsDataSource" destination="TF9-nJ-BQS" id="ETB-dS-BXA"/>
-                        <outlet property="searchResultsDelegate" destination="TF9-nJ-BQS" id="XVo-25-39E"/>
+                        <outlet property="delegate" destination="TF9-nJ-BQS" id="1aU-4g-c3z"/>
+                        <outlet property="searchBar" destination="ZWL-i1-Oh7" id="wpT-3B-AGw"/>
+                        <outlet property="searchContentsController" destination="TF9-nJ-BQS" id="vaH-0Z-l2v"/>
+                        <outlet property="searchResultsDataSource" destination="TF9-nJ-BQS" id="axI-Di-bfk"/>
+                        <outlet property="searchResultsDelegate" destination="TF9-nJ-BQS" id="Ben-14-3Kc"/>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-710" y="38"/>
+            <point key="canvasLocation" x="-1682" y="-397"/>
         </scene>
         <!--I City Show City Info-->
         <scene sceneID="wgT-fj-NGC">
@@ -62,7 +79,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="THM-9v-eZv">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="THM-9v-eZv">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -80,17 +97,162 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0d8-yG-0AN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-344" y="38"/>
+            <point key="canvasLocation" x="-1257" y="-412"/>
+        </scene>
+        <!--I City Introduction View Controller-->
+        <scene sceneID="8SX-eZ-dQL">
+            <objects>
+                <viewController restorationIdentifier="iCityIntroductionViewController" storyboardIdentifier="iCityIntroductionViewController" id="XTU-MI-PqI" customClass="iCityIntroductionViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="arS-0P-L8P">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Search you city here  ⤴ " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyX-NP-lg1">
+                                <rect key="frame" x="27" y="40" width="204" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="5Op-2y-M8O"/>
+                                    <constraint firstAttribute="width" constant="204" id="xA1-3e-2aU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Select your city " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9a-vn-nwJ">
+                                <rect key="frame" x="183" y="80" width="211" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="211" id="jTg-7C-PVN"/>
+                                    <constraint firstAttribute="height" constant="21" id="lft-fh-eqh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Drag this bar to adjust screen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6y-Xv-vJ0">
+                                <rect key="frame" x="27" y="258" width="253" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="253" id="IxJ-8b-A0T"/>
+                                    <constraint firstAttribute="height" constant="21" id="VuX-7y-9ZF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tap, hold and release to get city " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bc3-SW-URp">
+                                <rect key="frame" x="27" y="405" width="283" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="283" id="GRK-lt-fso"/>
+                                    <constraint firstAttribute="height" constant="31" id="wdn-s8-7K6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="↙ from this list" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stz-vo-l4A">
+                                <rect key="frame" x="183" y="100" width="211" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="ycZ-N9-rLQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="stz-vo-l4A" firstAttribute="trailing" secondItem="L9a-vn-nwJ" secondAttribute="trailing" type="default" id="7ph-P8-mdB"/>
+                            <constraint firstItem="vyX-NP-lg1" firstAttribute="top" secondItem="arS-0P-L8P" secondAttribute="top" constant="40" id="FN6-3u-Vu7"/>
+                            <constraint firstItem="L9a-vn-nwJ" firstAttribute="top" secondItem="arS-0P-L8P" secondAttribute="top" constant="80" id="Itj-wT-L0C"/>
+                            <constraint firstItem="stz-vo-l4A" firstAttribute="top" secondItem="arS-0P-L8P" secondAttribute="top" constant="100" id="LFv-dC-jb0"/>
+                            <constraint firstItem="Bc3-SW-URp" firstAttribute="leading" secondItem="P6y-Xv-vJ0" secondAttribute="leading" type="default" id="MMd-sq-Zlo"/>
+                            <constraint firstItem="vyX-NP-lg1" firstAttribute="leading" secondItem="P6y-Xv-vJ0" secondAttribute="leading" type="default" id="MdE-mz-SgN"/>
+                            <constraint firstItem="P6y-Xv-vJ0" firstAttribute="leading" secondItem="arS-0P-L8P" secondAttribute="leading" constant="27" id="NeO-fe-aOv"/>
+                            <constraint firstAttribute="bottom" secondItem="Bc3-SW-URp" secondAttribute="bottom" constant="112" id="Yf5-5N-IFt"/>
+                            <constraint firstItem="L9a-vn-nwJ" firstAttribute="leading" secondItem="arS-0P-L8P" secondAttribute="leading" constant="183" id="ZaS-Ix-FdO"/>
+                            <constraint firstItem="stz-vo-l4A" firstAttribute="leading" secondItem="L9a-vn-nwJ" secondAttribute="leading" type="default" id="gPD-Uv-Mb7"/>
+                            <constraint firstItem="P6y-Xv-vJ0" firstAttribute="top" secondItem="arS-0P-L8P" secondAttribute="top" constant="258" id="jHC-ji-cWn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label1" destination="P6y-Xv-vJ0" id="o9b-FG-E9l"/>
+                        <outlet property="label2" destination="Bc3-SW-URp" id="GIq-4L-tmF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UJF-He-cQh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2090" y="270"/>
+        </scene>
+        <!--I City Web View Controller-->
+        <scene sceneID="SMS-CP-wHV">
+            <objects>
+                <viewController restorationIdentifier="iCityWebViewController" storyboardIdentifier="iCityWebViewController" id="hId-av-IYO" customClass="iCityWebViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FS4-IV-zBI">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ve2-Pz-oEh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ve2-Pz-oEh" firstAttribute="trailing" secondItem="FS4-IV-zBI" secondAttribute="trailing" type="default" id="3Bn-Gl-1xl"/>
+                            <constraint firstItem="Ve2-Pz-oEh" firstAttribute="leading" secondItem="FS4-IV-zBI" secondAttribute="leading" type="default" id="SPH-Au-uOO"/>
+                            <constraint firstItem="Ve2-Pz-oEh" firstAttribute="bottom" secondItem="FS4-IV-zBI" secondAttribute="bottom" type="default" id="kiv-ht-lTh"/>
+                            <constraint firstItem="Ve2-Pz-oEh" firstAttribute="top" secondItem="FS4-IV-zBI" secondAttribute="top" type="default" id="tWe-DK-8fx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Ve2-Pz-oEh" id="1Oh-Qr-g17"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p4I-cg-bbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1667" y="270"/>
+        </scene>
+        <!--I City Map View Controller-->
+        <scene sceneID="Kui-VV-xjD">
+            <objects>
+                <viewController restorationIdentifier="iCityMapViewController" storyboardIdentifier="iCityMapViewController" id="9TR-ui-cBV" customClass="iCityMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="l1K-Bf-zTg">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WtB-T0-j2p">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WtB-T0-j2p" firstAttribute="leading" secondItem="l1K-Bf-zTg" secondAttribute="leading" type="default" id="Eg2-Vl-v1C"/>
+                            <constraint firstItem="WtB-T0-j2p" firstAttribute="trailing" secondItem="l1K-Bf-zTg" secondAttribute="trailing" type="default" id="gzE-Wo-Tlg"/>
+                            <constraint firstItem="WtB-T0-j2p" firstAttribute="bottom" secondItem="l1K-Bf-zTg" secondAttribute="bottom" type="default" id="hIK-ph-vsI"/>
+                            <constraint firstItem="WtB-T0-j2p" firstAttribute="top" secondItem="l1K-Bf-zTg" secondAttribute="top" type="default" id="jnc-dy-LPM"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="WtB-T0-j2p" id="qaG-ZT-7e5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UCy-0r-mf6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1037" y="253"/>
+        </scene>
+        <!--I City Main View Controller-->
+        <scene sceneID="Tab-WS-4Hq">
+            <objects>
+                <viewController restorationIdentifier="iCityMainViewController" storyboardIdentifier="iCityMainViewController" id="X2R-qX-jUb" customClass="iCityMainViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4ty-sr-gUf">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BQo-dc-D5w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-877" y="-412"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="iCityShowCityInfo" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/iCityShowCityInfo.h"/>
-        </class>
-        <class className="iCityTableViewConroller" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/iCityTableViewConroller.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

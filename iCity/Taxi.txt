@@ -1,0 +1,184 @@
+{
+    "result" : 
+    {
+
+            "Hyderabad":[
+                            {"cabname":"Dot Cabs","number":["04024242424"],"url":"http://www.dotcabs.com"},
+                            {"cabname":"Yello Cabs","number":["04066906690"],"url":"http://www.yellowcabshyd.com"},
+                            {"cabname":"Orange Cabs","number":["04044454647"],"url":"http://www.orangecabs.com"},
+                            {"cabname":"Cosy Cabs","number":["04027767146"],"url":"https://www.cosycabs.in"},
+                            {"cabname":"Meru Cabs","number":["04044224422"],"url":"http://www.merucabs.com"},
+                            {"cabname":"Sky Cabs","number":["04049494949"],"url":"http://www.skycabs.in"},
+                            {"cabname":"City Cabs","number":["04066206620"],"url":"http://www.mycitycabs.com"}
+                        ],
+
+            "Guwahati":[
+							{"cabname":"Prime cabs", "number":["03612222233"],"url":"http://www.primecabz.com"},
+							{"cabname":"My taxi trip", "number":["03612228888"],"url":"http://mytaxitrip.com"},
+							{"cabname":"Kamakshi Tours", "number":["03612457866","09864047996"],"url":null},
+							{"cabname":"Assam On Wheels", "number":["03612842961","09435192570"],"url":null},
+							{"cabname":"Savaari car rentals", "number":["036118001088100  "],"url":null},
+							{"cabname":"LEE Tours & Travels", "number":["09707868200  "],"url":null}
+                        
+                        ],
+			
+			"Patna":[
+							{"cabname":"Patna Taxi", "number":["09939631322","09386020166"],"url":"http://www.patnataxi.com"},
+							{"cabname":"Eazee cab", "number":["09934692970","09043020240"],"url":"http://www.eazeecab.com"},
+							{"cabname":"Mauryan Cabs", "number":["09263636464"],"url":"http://www.mauryancabs.com"},
+							{"cabname":"Maa Vindhyabansi taxi", "number":["09304022770"],"url":null},
+							{"cabname":"Across the world Travel Services", "number":["06122501212","09835464797"],"url":null}
+						],
+						
+			"Chandigarh":[
+							{"cabname":"MEGA cabs", "number":["01724141414"],"url":"http://www.megacabs.com"},
+							{"cabname":"Dev tours and travels", "number":["09781410616"],"url":"http://www.car-rental-chandigarh.com"},
+							{"cabname":"SK Taxi", "number":["09988495939","09988041735" ],"url":"http://www.sktaxiservices.in"},
+							{"cabname":"Fastway taxi ", "number":["09501208425"],"url":"http://taxichandigarh.in"},
+							{"cabname":"Bss Taxi Services", "number":["01724982691"],"url":null},
+							{"cabname":"RBTS Radio Cabs", "number":["08288048601","01724848484"],"url":null},
+							{"cabname":"Channi Taxi Service", "number":["01724984264"],"url":null},
+							{"cabname":"Bhagwati taxi services", "number":["01724984316"],"url":null}		
+						],
+			"Raipur":[
+							{"cabname":"Savaari car rentals", "number":["077118001088100"],"url":null},
+							{"cabname":"Dev Travel Services", "number":["07714251100","09752008009"],"url":null}
+						],
+			
+			"Delhi":[
+							{"cabname":"MEGA cabs", "number":["01141414141"],"url":"http://www.megacabs.com"},
+							{"cabname":"Meru Cabs", "number":["01144224422"],"url":"http://www.merucabs.com"},
+							{"cabname":"Easy Cabs", "number":["01143434343"],"url":"http://www.easycabs.com"},
+							{"cabname":"Taxi india", "number":["01140406060"],"url":"http://www.taxiindia.net"},
+							{"cabname":"Ranjit bros taxi", "number":["01145383838","09999482222"],"url":"http://www.ranjitbrostaxi.com"},
+							{"cabname":"Bagmati taxi", "number":["08010507901","09990123859","09971156761"],"url":"http://www.delhitaxi.co.in"},
+							{"cabname":"Taxi rental delhi", "number":["07503516542"],"url":"http://www.bushiredelhi.com"},
+							{"cabname":"Lord Krishna cabs", "number":["09810736641"],"url":"http://www.taxicabdelhi.com"}
+						],
+						
+			"Ahmadabad":[
+							{"cabname":"Manan cabs", "number":["07940074007","09998990601"],"url":"http://www.manancab.com"},	
+							{"cabname":"City taxi", "number":["09898400789"],"url":"http://www.citytaxi.co.in"},
+							{"cabname":"Apple Cabs ", "number":["07949004900","08511166327"],"url":null},
+							{"cabname":"Carbonarrival taxi", "number":["09375912446"],"url":null},
+							{"cabname":"Savaari car rentals", "number":["07918001088100"],"url":null}
+						],
+								
+			"Surat":[
+							{"cabname":"Surat taxi", "number":["08469633994","09978837731","08758530000"],"url":"http://www.surattaxi.com"},
+							{"cabname":"Amu cabs", "number":["02614000005"],"url":"http://www.amucabs.com"},
+							{"cabname":"Surat taxi cabs", "number":["02613220000"],"url":"http://www.surattaxicabs.com"},
+							{"cabname":"Call up cab", "number":["02612440300"],"url":"http://www.callupcab.com"},
+							{"cabname":"Surat district taxi", "number":["02616500755"],"url":"http://www.surattaxi.org"},
+							{"cabname":"Surat taxi hire", "number":["09825487425","09099622505"],"url":"http://www.surattaxihire.com"},
+							{"cabname":"Surat City Cabs", "number":["02616642222","09909526002"],"url":null},
+							{"cabname":"Savaari car rentals", "number":["026118001088100"],"url":null}
+					
+						],
+						
+			"Gandhinagar":[
+							{"cabname":"Royal Travels", "number":["09825350460"],"url":null},
+							{"cabname":"Express travels", "number":["07923229998"],"url":null},
+							{"cabname":"Savaari car rentals", "number":["07918001088100"],"url":null}
+						],
+						
+			"Gurgaon":[
+							{"cabname":"Cabs 24", "number":["09899993634"],"url":"http://www.cabs24.in"},
+							{"cabname":"Gurgaon taxi service", "number":["09899999677","09811130613"],"url":"http://www.gurgaontaxiservices.com"},
+							{"cabname":"Shri Shyam Taxi", "number":["01166534983"],"url":null},
+							{"cabname":"Tantra Rent A Car", "number":["01166435211"],"url":null},
+							{"cabname":"Savaari car rentals", "number":["01118001088100"],"url":null}
+					],
+			"Bangalore":[
+							{"cabname":"MEGA cabs", "number":["08047474747"],"url":"http://www.megacabs.com"},
+							{"cabname":"Meru Cabs", "number":["08044224422"],"url":"http://www.merucabs.com"},
+							{"cabname":"Easy Cabs", "number":["08043434343"],"url":"http://www.easycabs.com"},
+							{"cabname":"KSTDC Cabs", "number":["09880121969","08041553333"],"url":"http://kstdccitycabs.com"},
+							{"cabname":"Star city taxi", "number":["08023133333","",""],"url":"http://www.starcitytaxi.com"},
+							{"cabname":"Your cabs", "number":["08030600600"],"url":"http://www.yourcabs.com/bangalore"},
+							{"cabname":"Quick cabs", "number":["08041600000","08041700000"],"url":"http://www.quickcabsbangalore.com"},
+							{"cabname":"Air Link Taxi", "number":["08025362222"],"url":null},
+							{"cabname":"Chamundi City Taxi", "number":["08025200444","08025200333"],"url":null},
+							{"cabname":"City Safari", "number":["08025539999"],"url":null}
+					],
+			
+			"Thiruvananthapuram":[
+							{"cabname":"Hindustan cabs", "number":["08590066888","08590066999","09287341885"],"url":"http://www.hindustancabs.com"},
+							{"cabname":"Texi tel", "number":["09947019292","09947029292"],"url":"http://www.taxitel.in"},
+							{"cabname":"Travancore cabs", "number":["04712333367","09447970371"],"url":"http://www.travancorecabs.com"}
+					],
+			
+			"kochi":[
+							{"cabname":"Kochi taxi cabs", "number":["09061590099"],"url":"http://www.kochitaxicabs.com"},
+							{"cabname":"Kumar Taxis", "number":["0484223558","0484221213","0484225558","04845578555","04845587222"],"url":"http://www.kumartravels.com"}
+					],
+			
+			"Mumbai":[
+							{"cabname":"MEGA cabs", "number":["02242424242"],"url":"http://www.megacabs.com"},
+							{"cabname":"Meru Cabs", "number":["02244224422"],"url":"http://www.merucabs.com"},
+							{"cabname":"Easy Cabs", "number":["02243434343"],"url":"http://www.easycabs.com"},
+							{"cabname":"TAB cabs", "number":["02263636363"],"url":"http://www.tabcab.in/index.html"},
+							{"cabname":"City cool cabs", "number":["02222164466"],"url":"http://www.citycoolcab.in"},
+							{"cabname":"Book my cab", "number":["02261234567"],"url":"http://www.bookmycab.com"}
+					],
+					
+			"Pune":[
+							{"cabname":"Cool cab", "number":["09527779813","07350686006"],"url":"http://www.alicoolcab.com"},
+							{"cabname":"Apollo cabs", "number":["09146390223","09146390224"],"url":"http://www.apollocabs.in"},
+							{"cabname":"Wing radio cabs", "number":["02040100100"],"url":"http://www.wingsradiocabs.com"},
+							{"cabname":"T cabs", "number":["02067286728"],"url":"http://www.tcabs.in"},
+							{"cabname":"Easy ride", "number":["08600024545"],"url":"http://easyridecabs.in"}
+					],
+			
+			"Nagpur":[
+							
+							{"cabname":"Cel cabs", "number":["071260609090"],"url":"http://www.celcabs.com"},
+							{"cabname":"Jet cabs", "number":["07126066666"],"url":"http://www.jetcabs.co.in"},
+							{"cabname":"Vishal travel", "number":["09145459600"],"url":"http://taxiinnagpur.com"},
+							{"cabname":"SOS cabs", "number":["07350097999"],"url":"http://www.soscabs.com"},
+							{"cabname":"Pooja Car Rentals", "number":["07122053795","08793777418"],"url":null},
+							{"cabname":"Speed Cab Services ", "number":["08485880068"],"url":null},
+							{"cabname":"Cosy Cabs Travels", "number":["07122523809","09890486609"],"url":null}
+					],
+					
+			"Bhubaneswar":[
+							{"cabname":"Orisa taxi", "number":["09776697766"],"url":"http://www.orissataxiservices.com"},
+							{"cabname":"Chqx Travel Link", "number":["06742573998","09338072253"],"url":null}
+					],
+					
+			"Pondicherry":[
+							{"cabname":"Capital Cabs", "number":["09486415259","09345415640"],"url":null},
+							{"cabname":"Royal travel cabs", "number":["09894525162"],"url":"http://royaltravelscabs.com"},
+							{"cabname":"Pondicherry taxi service", "number":["04132222333","09443202804","08220383939"],"url":"http://pondicherrytaxiservice.com/"}
+					],
+					
+			"Jaipur":[
+							{"cabname":"My cabs", "number":["01415190808"],"url":"http://www.mycabs.in"},
+							{"cabname":"Metro cabs", "number":["01414244444"],"url":"http://www.metrocabs.in"},
+							{"cabname":"Jaipur car rentals", "number":["01412371390","09828157390","09950750550"],"url":"http://www.jaipurcarsrental.com/"},
+							{"cabname":"Car rentals jaipur", "number":["07597690013"],"url":"http://www.carrentalsjaipur.blogspot.in"},
+							{"cabname":"Jaipur travels", "number":["09314503423"],"url":"http://www.jaipurtravel.com"}
+					],
+					
+			"Chennai":[
+							{"cabname":"NTL taxi", "number":["0440003000"],"url":"http://www.ntltaxi.com"},
+							{"cabname":"Friends call taxi", "number":["04426256565","04426252525","04430063006"],"url":"http://www.friendstrackcalltaxi.com"},
+							{"cabname":"Fast track taxi", "number":["04460006000","04428889999","04424732020"],"url":"http://www.fasttrackcalltaxi.in"},
+							{"cabname":"Saravani call taxi", "number":["04428346600","04428175577"],"url":"http://www.saravanacalltaxi.com"},
+							{"cabname":"Bharati call taxi", "number":["04430002000","04428880000"],"url":"http://www.bharathicalltaxi.in"},
+							{"cabname":"Car rental chennai", "number":["09841030065"],"url":"http://www.carrentalchennai.com"}
+					],
+			
+			"Kolkata":[
+							{"cabname":"MEGA cabs", "number":["03341414141"],"url":"http://www.megacabs.com"},
+							{"cabname":"Speed travels", "number":["03323608800","03323515306","09831000588","09830035300"],"url":"http://speedtravels.co.in"},
+							{"cabname":"Kolkata cabs", "number":["03324191310","09831492956"],"url":"http://kolkatacabs.com"},
+							{"cabname":"Gurdarshan Taxi Service", "number":["03366246443"],"url":null},
+							{"cabname":"Fast Track Call Cabs", "number":["03366342217"],"url":null},
+							{"cabname":"Corporate Cab AC", "number":["03366038938"],"url":null},
+							{"cabname":"Balbinder Singh Cool Cab", "number":["03366341895"],"url":null},
+							{"cabname":"Just Cab", "number":["03366343536"],"url":null}
+					]
+        
+    }
+}
