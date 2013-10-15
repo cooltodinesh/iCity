@@ -1,7 +1,7 @@
 iCity
 =====
 
-When you visit a new place, you wanna know some basic thiings about it.
+When you visit a new place, you wanna know some basic things about it.
 This iOS app to gives you that information.
 
 Features :-
